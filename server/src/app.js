@@ -3,6 +3,7 @@ import { connectDB } from './lib/db.js';
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
+import addFoodItemsRoutes from "./routes/auth.addFoodItems.routes.js";
 
 dotenv.config({ path: "./.env" });
 
@@ -16,6 +17,10 @@ app.get("/", (req, res) => {
     res.send("Zomato Clone is Running Properly");
 });
 
+//auth routes
 app.use("/api/auth", authRoutes);
+
+//add food items routes
+app.use("/api/foodItems", addFoodItemsRoutes);
 
 export default app;

@@ -3,9 +3,12 @@ import { registerUser, loginUser, logoutUser, registerRestaurantPartner, loginRe
 
 const router = express.Router();
 
+//user routes
 router.post("/user/register", registerUser);
 router.post("/user/login", loginUser);
 router.post("/user/logout", logoutUser);
+
+//restaurant partner routes
 router.post("/restaurantPartner/register", registerRestaurantPartner);
 router.post("/restaurantPartner/login", loginRestaurantPartner);
 router.post("/restaurantPartner/logout", logoutRestaurantPartner);
