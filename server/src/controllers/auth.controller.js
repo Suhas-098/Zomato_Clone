@@ -1,7 +1,10 @@
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import RestaurantPartner from "../models/restaurantPartner.js";
 
+
+//user controller
 const registerUser = async (req, res) => {
     try {
         const { fullName, email, password } = req.body;
@@ -68,7 +71,7 @@ const loginUser = async (req, res) => {
 };
 
 
-const logoutUser = async (req, res) => {
+const logoutUser = (req, res) => {
     try {
         const cookie = req.cookies.token;
         if (!cookie) {
@@ -81,4 +84,72 @@ const logoutUser = async (req, res) => {
     }
 }
 
-export { registerUser, loginUser, logoutUser };
+
+//restaurant partner controller
+const registerRestaurantPartner = async (req, res) => {
+    try {
+        const { RestaurantPartnerName, workEmail, workPassword } = req.body;
+
+        const isRestaurantPartnerAlreadyExist = await RestaurantPartner.findOne({ workEmail });
+        if (isRestaurantPartnerAlreadyExist) {
+            return res.status(400).json({ message: "Restaurant Partner already exists" })
+        }
+
+        const restaurantPartner = await RestaurantPartner.create({
+            RestaurantPartnerName,
+            workEmail,
+            workPassword: bcrypt.hashSync(workPassword, 10)
+        })
+
+        const token = jwt.sign({ id: restaurantPartner._id }, process.env.JWT_SECRET, { expiresIn: "5d" })
+        res.cookie("token", token)
+        res.status(200).json({ message: "Restaurant Partner registered successfully" })
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error in registerRestaurantPartner controller", error: error.message })
+    }
+}
+
+
+const loginRestaurantPartner = async (req, res) => {
+    try {
+        const { workEmail, workPassword } = req.body;
+
+        const isRestaurantPartnerLoggedIn = req.cookies.token;
+        if (isRestaurantPartnerLoggedIn) {
+            return res.status(400).json({ message: "Restaurant Partner already logged in" })
+        }
+
+        const restaurantPartner = await RestaurantPartner.findOne({ workEmail });
+        if (!restaurantPartner) {
+            return res.status(400).json({ message: "Restaurant Partner not found" })
+        }
+
+        const isPasswordCorrect = bcrypt.compareSync(workPassword, restaurantPartner.workPassword);
+        if (!isPasswordCorrect) {
+            return res.status(400).json({ message: "Invalid Password" })
+        }
+
+        const token = jwt.sign({ id: restaurantPartner._id }, process.env.JWT_SECRET, { expiresIn: "5d" })
+        res.cookie("token", token)
+        res.status(200).json({ message: "Restaurant Partner logged in successfully" })
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error in loginRestaurantPartner controller", error: error.message })
+    }
+}
+
+
+const logoutRestaurantPartner = (req, res) => {
+    try {
+        const cookie = req.cookies.token;
+        if (!cookie) {
+            return res.status(400).json({ message: "Restaurant Partner not logged in" })
+        }
+        res.clearCookie("token")
+        res.status(200).json({ message: "Restaurant Partner logged out successfully" })
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error in logoutRestaurantPartner controller", error: error.message })
+    }
+}
+
+
+export { registerUser, loginUser, logoutUser, registerRestaurantPartner, loginRestaurantPartner, logoutRestaurantPartner };
