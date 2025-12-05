@@ -24,11 +24,10 @@ function RestaurantPartnerRegister() {
 
         <div className="auth-container">
             <div className="auth-card">
-                <h2 className="auth-title">Restaurant Partner Register</h2>
+                <h2 className="auth-title">Partner Register</h2>
                 <form onSubmit={handleSubmit}>
 
                     <>
-                        <div>RestaurantPartnerRegister</div>
                         <div className="form-group">
                             <label className="form-label">Restaurant Name</label>
                             <input
@@ -37,6 +36,30 @@ function RestaurantPartnerRegister() {
                                 className="form-input"
                                 placeholder="Enter restaurant name"
                                 value={formData.restaurantName}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label">Contact Name</label>
+                            <input
+                                type="text"
+                                name="contactName"
+                                className="form-input"
+                                placeholder="Enter contact name"
+                                value={formData.contactName}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label">Phone Number</label>
+                            <input
+                                type="text"
+                                name="phoneNumber"
+                                className="form-input"
+                                placeholder="Enter phone number"
+                                value={formData.phoneNumber}
                                 onChange={handleChange}
                                 required
                             />

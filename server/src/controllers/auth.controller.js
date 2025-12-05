@@ -88,7 +88,7 @@ const logoutUser = (req, res) => {
 //restaurant partner controller
 const registerRestaurantPartner = async (req, res) => {
     try {
-        const { RestaurantPartnerName, workEmail, workPassword } = req.body;
+        const { RestaurantPartnerName, workEmail, workPassword, contactName, phoneNumber } = req.body;
 
         const isRestaurantPartnerAlreadyExist = await RestaurantPartner.findOne({ workEmail });
         if (isRestaurantPartnerAlreadyExist) {
@@ -97,8 +97,11 @@ const registerRestaurantPartner = async (req, res) => {
 
         const restaurantPartner = await RestaurantPartner.create({
             RestaurantPartnerName,
+            contactName,
+            phoneNumber,
             workEmail,
-            workPassword: bcrypt.hashSync(workPassword, 10)
+            workPassword
+            // workPassword: bcrypt.hashSync(workPassword, 10) will be adding it later i need to see my password in database
         })
 
         const token = jwt.sign({ id: restaurantPartner._id }, process.env.JWT_SECRET, { expiresIn: "5d" })
