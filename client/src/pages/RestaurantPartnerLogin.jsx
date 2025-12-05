@@ -23,11 +23,13 @@ function RestaurantPartnerLogin() {
         axios.post(`http://localhost:3000/api/auth/restaurantPartner/login`, formData, { withCredentials: true })
             .then((response) => {
                 console.log(response.data);
+                localStorage.setItem("token", response.data.token);
+                navigate('/add-food-items');  // Only navigate when login SUCCESS
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error.response?.data || error);
+                alert(error.response?.data?.message || "Login failed");
             });
-        navigate('/add-food-items');
     };
 
     return (

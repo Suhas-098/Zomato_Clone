@@ -26,11 +26,13 @@ function RestaurantPartnerRegister() {
         axios.post(`http://localhost:3000/api/auth/restaurantPartner/register`, formData, { withCredentials: true })
             .then((response) => {
                 console.log(response.data);
+                localStorage.setItem("token", response.data.token);
+                navigate('/restaurantPartner/login');
             })
             .catch((error) => {
                 console.log(error);
             });
-        navigate('/add-food-items');
+
     };
 
     return (

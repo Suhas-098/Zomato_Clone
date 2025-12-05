@@ -23,11 +23,12 @@ function UserLoginPage() {
         axios.post(`http://localhost:3000/api/auth/user/login`, formData, { withCredentials: true })
             .then((response) => {
                 console.log(response.data);
+                localStorage.setItem("token", response.data.token);
+                navigate('/user/login');
             })
             .catch((error) => {
                 console.log(error);
             })
-        navigate("/");
     };
 
     return (

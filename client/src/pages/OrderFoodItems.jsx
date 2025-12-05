@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-function AddFoodItems() {
+function OrderFoodItems() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -13,13 +13,13 @@ function AddFoodItems() {
     if (!isLoggedIn) {
         return (
             <div>
-                <h2>Please login to add food items</h2>
-                <Link to="/restaurantPartner/login">Login</Link>
+                <h2>Please login to order food items</h2>
+                <Link to="/user/login">Login</Link>
             </div>
         );
     }
 
-    return <div>Welcome Partner! You can add food items here</div>;
+    return <div>Welcome User! You can order food items here</div>;
 }
 
-export default AddFoodItems;
+export default OrderFoodItems;

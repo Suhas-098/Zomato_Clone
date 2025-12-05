@@ -24,11 +24,12 @@ function UserRegisterPage() {
         axios.post(`http://localhost:3000/api/auth/user/register`, formData, { withCredentials: true })
             .then((response) => {
                 console.log(response.data);
+                localStorage.setItem("token", response.data.token);
+                navigate('/user/login');//Only navigate when register SUCCESS
             })
             .catch((error) => {
                 console.log(error);
             })
-        navigate("/");
     };
 
     return (
