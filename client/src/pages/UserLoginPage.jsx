@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import '../components/Auth/Auth.css';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function UserLoginPage() {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -16,7 +20,14 @@ function UserLoginPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Login Data:', formData);
-        // Logic will be added by the user later
+        axios.post(`http://localhost:3000/api/auth/user/login`, formData, { withCredentials: true })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        navigate("/");
     };
 
     return (
@@ -58,6 +69,12 @@ function UserLoginPage() {
                     Don't have an account?
                     <Link to="/user/register" className="auth-link">
                         Register
+                    </Link>
+                </div>
+                <div className="auth-switch">
+                    Food Partner?
+                    <Link to="/restaurantpartner/login" className="auth-link">
+                        Login
                     </Link>
                 </div>
             </div>

@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import '../components/Auth/Auth.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function UserRegisterPage() {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         fullName: '',
@@ -10,17 +14,22 @@ function UserRegisterPage() {
         password: ''
     });
 
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Register Data:', formData);
-        // Logic will be added by the user later
+        axios.post(`http://localhost:3000/api/auth/user/register`, formData, { withCredentials: true })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        navigate("/");
     };
-
-
 
     return (
 
@@ -72,6 +81,12 @@ function UserRegisterPage() {
                     Already have an account?
                     <Link to="/user/login" className="auth-link">
                         Login
+                    </Link>
+                </div>
+                <div className="auth-switch">
+                    Food Partner?
+                    <Link to="/restaurantpartner/register" className="auth-link">
+                        Register
                     </Link>
                 </div>
             </div>

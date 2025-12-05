@@ -100,8 +100,7 @@ const registerRestaurantPartner = async (req, res) => {
             contactName,
             phoneNumber,
             workEmail,
-            workPassword
-            // workPassword: bcrypt.hashSync(workPassword, 10) will be adding it later i need to see my password in database
+            workPassword: bcrypt.hashSync(workPassword, 10)
         })
 
         const token = jwt.sign({ id: restaurantPartner._id }, process.env.JWT_SECRET, { expiresIn: "5d" })

@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import '../components/Auth/Auth.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function RestaurantPartnerLogin() {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         workEmail: '',
@@ -16,7 +20,14 @@ function RestaurantPartnerLogin() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Login Data:', formData);
-        // Logic will be added by the user later
+        axios.post(`http://localhost:3000/api/auth/restaurantPartner/login`, formData, { withCredentials: true })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        navigate('/add-food-items');
     };
 
     return (
@@ -57,6 +68,12 @@ function RestaurantPartnerLogin() {
                     Don't have an account?
                     <Link to="/restaurantPartner/register" className="auth-link">
                         Register
+                    </Link>
+                </div>
+                <div className="auth-switch">
+                    User?
+                    <Link to="/user/login" className="auth-link">
+                        Login
                     </Link>
                 </div>
             </div>

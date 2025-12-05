@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import '../components/Auth/Auth.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function RestaurantPartnerRegister() {
 
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
-        restaurantName: '',
+        RestaurantPartnerName: '',
+        contactName: '',
+        phoneNumber: '',
         workEmail: '',
         workPassword: ''
     });
@@ -17,7 +23,14 @@ function RestaurantPartnerRegister() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Register Data:', formData);
-        // Logic will be added by the user later
+        axios.post(`http://localhost:3000/api/auth/restaurantPartner/register`, formData, { withCredentials: true })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        navigate('/add-food-items');
     };
 
     return (
@@ -32,10 +45,10 @@ function RestaurantPartnerRegister() {
                             <label className="form-label">Restaurant Name</label>
                             <input
                                 type="text"
-                                name="restaurantName"
+                                name="RestaurantPartnerName"
                                 className="form-input"
                                 placeholder="Enter restaurant name"
-                                value={formData.restaurantName}
+                                value={formData.RestaurantPartnerName}
                                 onChange={handleChange}
                                 required
                             />
@@ -95,6 +108,12 @@ function RestaurantPartnerRegister() {
                     Already have an account?
                     <Link to="/restaurantPartner/login" className="auth-link">
                         Login
+                    </Link>
+                </div>
+                <div className="auth-switch">
+                    User?
+                    <Link to="/user/register" className="auth-link">
+                        Register
                     </Link>
                 </div>
             </div>
