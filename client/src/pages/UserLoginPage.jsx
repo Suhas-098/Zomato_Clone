@@ -24,7 +24,7 @@ function UserLoginPage() {
             .then((response) => {
                 console.log(response.data);
                 localStorage.setItem("token", response.data.token);
-                navigate('/user/login');
+                navigate('/');
             })
             .catch((error) => {
                 console.log(error);

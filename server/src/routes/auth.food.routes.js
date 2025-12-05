@@ -4,7 +4,7 @@ import { getAllFoodItemsController } from "../controllers/auth.addFoodItems.cont
 
 const router = express.Router();
 
-
+//get all food items that restaurant partner added
 router.get("/all", protectRouteUser, getAllFoodItemsController);
 
 

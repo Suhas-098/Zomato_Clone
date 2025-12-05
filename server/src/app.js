@@ -26,10 +26,10 @@ app.get("/", (req, res) => {
 //auth routes for both user and restaurant partner
 app.use("/api/auth", authRoutes);
 
-//add food items routes
+//add food items by restaurant partner
 app.use("/api/foodItems", addFoodItemsRoutes);
 
-//food routes
+//food routes to get all food items added by restaurant partner
 app.use("/api/food", foodRoutes);
 
 export default app;

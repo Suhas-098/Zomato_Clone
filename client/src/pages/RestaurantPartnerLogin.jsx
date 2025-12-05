@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../components/Auth/Auth.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -8,6 +8,15 @@ function RestaurantPartnerLogin() {
 
     const navigate = useNavigate();
 
+    // useEffect(() => {
+    //     if (localStorage.getItem("token")) {
+    //         navigate('/add-food-items');
+    //     } else {
+    //         navigate('/restaurantPartner/login');
+    //     }
+    // },);
+
+
     const [formData, setFormData] = useState({
         workEmail: '',
         workPassword: ''
@@ -16,6 +25,7 @@ function RestaurantPartnerLogin() {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -31,6 +41,7 @@ function RestaurantPartnerLogin() {
                 alert(error.response?.data?.message || "Login failed");
             });
     };
+
 
     return (
         <div className="auth-container">

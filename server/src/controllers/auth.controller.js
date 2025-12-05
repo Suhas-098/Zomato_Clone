@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import RestaurantPartner from "../models/restaurantPartner.js";
 
-
 //user controller
 const registerUser = async (req, res) => {
     try {
@@ -89,12 +88,12 @@ const logoutUser = (req, res) => {
 const registerRestaurantPartner = async (req, res) => {
     try {
         const { RestaurantPartnerName, workEmail, workPassword, contactName, phoneNumber } = req.body;
-
+        //check if restaurant partner already exists
         const isRestaurantPartnerAlreadyExist = await RestaurantPartner.findOne({ workEmail });
         if (isRestaurantPartnerAlreadyExist) {
             return res.status(400).json({ message: "Restaurant Partner already exists" })
         }
-
+        //create restaurant partner
         const restaurantPartner = await RestaurantPartner.create({
             RestaurantPartnerName,
             contactName,
@@ -102,7 +101,7 @@ const registerRestaurantPartner = async (req, res) => {
             workEmail,
             workPassword: bcrypt.hashSync(workPassword, 10)
         })
-
+        //send token to client
         const token = jwt.sign({ id: restaurantPartner._id }, process.env.JWT_SECRET, { expiresIn: "5d" })
         res.cookie("token", token)
         res.status(200).json({ message: "Restaurant Partner registered successfully" })
@@ -115,22 +114,22 @@ const registerRestaurantPartner = async (req, res) => {
 const loginRestaurantPartner = async (req, res) => {
     try {
         const { workEmail, workPassword } = req.body;
-
+        //check if restaurant partner is already logged in
         const isRestaurantPartnerLoggedIn = req.cookies.token;
         if (isRestaurantPartnerLoggedIn) {
             return res.status(400).json({ message: "Restaurant Partner already logged in" })
         }
-
+        //find restaurant partner      
         const restaurantPartner = await RestaurantPartner.findOne({ workEmail });
         if (!restaurantPartner) {
             return res.status(400).json({ message: "Restaurant Partner not found" })
         }
-
+        //compare password      
         const isPasswordCorrect = bcrypt.compareSync(workPassword, restaurantPartner.workPassword);
         if (!isPasswordCorrect) {
             return res.status(400).json({ message: "Invalid Password" })
         }
-
+        //send token to client
         const token = jwt.sign({ id: restaurantPartner._id }, process.env.JWT_SECRET, { expiresIn: "5d" })
         res.cookie("token", token)
         res.status(200).json({ message: "Restaurant Partner logged in successfully" })
