@@ -27,7 +27,7 @@ function RestaurantPartnerRegister() {
             .then((response) => {
                 console.log(response.data);
                 localStorage.setItem("token", response.data.token);
-                navigate('/restaurantPartner/login');
+                navigate('/add-food-items');
             })
             .catch((error) => {
                 console.log(error);

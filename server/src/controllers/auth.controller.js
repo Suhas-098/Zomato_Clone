@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import RestaurantPartner from "../models/restaurantPartner.js";
 
-
 //user controller
 const registerUser = async (req, res) => {
     try {

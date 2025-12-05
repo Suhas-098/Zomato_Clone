@@ -25,7 +25,7 @@ function UserRegisterPage() {
             .then((response) => {
                 console.log(response.data);
                 localStorage.setItem("token", response.data.token);
-                navigate('/user/login');//Only navigate when register SUCCESS
+                navigate('/'); //Only navigate when register SUCCESS
             })
             .catch((error) => {
                 console.log(error);
