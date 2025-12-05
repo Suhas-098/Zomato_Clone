@@ -1,16 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import Reels from '../components/Reels/Reels'
 
 function Home() {
     return (
-        <div>
-            <div>Home</div>
-            <div className="auth-switch">
-                User?
-                <Link to="/user/login" className="auth-link">
-                    Login
-                </Link>
-            </div>
+        <div style={{ width: '100%', height: '100vh', overflow: 'hidden' }}>
+            <Reels />
         </div>
     )
 }
