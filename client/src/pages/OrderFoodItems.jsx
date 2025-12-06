@@ -1,75 +1,80 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import './OrderFoodItems.css';
-
-// Mock Data for UI demonstration
-const RESTAURANT_INFO = {
-    name: "Desi Tadka Biryani House And Family Restaurant",
-    rating: "4.1",
-    ratingCount: "10K+",
-    location: "Keshwapur",
-    distance: "6 km",
-    deliveryTime: "30-35 mins",
-    isReorder: true
-};
-
-const MENU_ITEMS = [
-    {
-        id: 1,
-        name: "Jeera Rice",
-        price: 162.50,
-        discountedPrice: 81.25,
-        description: "Aromatic basmati rice tempered with cumin seeds.",
-        rating: 4,
-        votes: 124,
-        isVeg: true,
-        isBestseller: false
-    },
-    {
-        id: 2,
-        name: "Butter Kulcha",
-        price: 56.25,
-        discountedPrice: 28.12,
-        description: "Soft and fluffy leavened bread cooked in a tandoor.",
-        rating: 4.5,
-        votes: 856,
-        isVeg: true,
-        isBestseller: true
-    },
-    {
-        id: 3,
-        name: "Chicken Biryani",
-        price: 320.00,
-        discountedPrice: 280.00,
-        description: "Rich and flavorful biryani with tender chicken pieces.",
-        rating: 4.8,
-        votes: 2100,
-        isVeg: false,
-        isBestseller: true
-    },
-    {
-        id: 4,
-        name: "Paneer Butter Masala",
-        price: 240.00,
-        discountedPrice: 210.00,
-        description: "Cottage cheese cubes in a rich tomato gravy.",
-        rating: 4.2,
-        votes: 540,
-        isVeg: true,
-        isBestseller: false
-    }
-];
-
-const REELS_DATA = [
-    { id: 101, videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", views: "1.2M", thumbnail: "#" },
-    { id: 102, videoUrl: "https://www.w3schools.com/html/movie.mp4", views: "850K", thumbnail: "#" },
-    { id: 103, videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", views: "2.1M", thumbnail: "#" },
-    { id: 104, videoUrl: "https://www.w3schools.com/html/movie.mp4", views: "500K", thumbnail: "#" },
-];
 
 function OrderFoodItems() {
     const navigate = useNavigate();
+    const { id } = useParams();
     const [activeTab, setActiveTab] = useState('menu'); // 'menu' or 'reels'
+
+    const [restaurant, setRestaurant] = useState(null);
+    const [menuItems, setMenuItems] = useState([]);
+    const [reelsData, setReelsData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchRestaurantData = async () => {
+            console.log("Fetching data for restaurant ID:", id); // LOG
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/api/food/restaurant/${id}`,
+                    { withCredentials: true }
+                );
+
+                console.log("API Response:", response.data); // LOG
+
+                const { restaurant, foodItems } = response.data;
+                setRestaurant(restaurant);
+
+                // Map food items to menu structure
+                const formattedMenu = foodItems.map(item => ({
+                    id: item._id,
+                    name: item.foodName,
+                    price: item.foodPrice,
+                    discountedPrice: Math.round(item.foodPrice * 0.5), // Mock discount logic
+                    description: item.foodDescription,
+                    isVeg: item.foodCategory?.toLowerCase() === 'veg', // Assuming category stores 'Veg'/'Non-Veg'
+                    rating: 4.0, // Mock rating
+                    votes: 100, // Mock votes
+                    image: item.foodImage,
+                    video: item.foodVideo
+                }));
+                setMenuItems(formattedMenu);
+
+                // Extract items with videos for reels
+                const reels = foodItems
+                    .filter(item => item.foodVideo)
+                    .map(item => ({
+                        id: item._id,
+                        videoUrl: item.foodVideo,
+                        views: "1K", // Mock views
+                        thumbnail: item.foodImage
+                    }));
+                setReelsData(reels);
+                setLoading(false);
+
+            } catch (err) {
+                console.error("Error fetching restaurant data:", err);
+                setError("Failed to load restaurant details");
+                setLoading(false);
+                navigate("/user/login");
+            }
+        };
+
+        if (id && id !== "undefined" && id !== "null") {
+            fetchRestaurantData();
+        } else {
+            console.log("Invalid ID provided in URL:", id);
+            setError("No restaurant selected");
+            setLoading(false);
+        }
+    }, [id]);
+
+    if (loading) return <div className="restaurant-page-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading...</div>;
+    if (error) return <div className="restaurant-page-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>{error}</div>;
+    if (!restaurant) return <div className="restaurant-page-container">Restaurant not found</div>;
 
     return (
         <div className="restaurant-page-container">
@@ -108,27 +113,25 @@ function OrderFoodItems() {
                 </div>
 
                 <div className="restaurant-title-section">
-                    <h1 className="restaurant-name">{RESTAURANT_INFO.name} <span style={{ fontWeight: 'normal' }}>ⓘ</span></h1>
+                    <h1 className="restaurant-name">{restaurant.RestaurantPartnerName} <span style={{ fontWeight: 'normal' }}>ⓘ</span></h1>
                     <div className="rating-badge">
-                        <span>{RESTAURANT_INFO.rating} ★</span>
-                        <span className="rating-count">By {RESTAURANT_INFO.ratingCount}</span>
+                        <span>4.1 ★</span>
+                        <span className="rating-count">By 10K+</span>
                     </div>
                 </div>
 
                 <div className="restaurant-info">
                     <div className="info-row">
-                        <span>📍</span> {RESTAURANT_INFO.distance} • {RESTAURANT_INFO.location}
+                        <span>📍</span> {restaurant.city || "Mumbai"} • {restaurant.address || "Location"}
                     </div>
                     <div className="delivery-time">
-                        <span style={{ fontWeight: 'bold' }}>⏱ {RESTAURANT_INFO.deliveryTime}</span> • Schedule for later ⌄
+                        <span style={{ fontWeight: 'bold' }}>⏱ 30-35 mins</span> • Schedule for later ⌄
                     </div>
                 </div>
 
-                {RESTAURANT_INFO.isReorder && (
-                    <div className="reorder-badge">
-                        ✓ Frequently reordered
-                    </div>
-                )}
+                <div className="reorder-badge">
+                    ✓ Frequently reordered
+                </div>
 
                 {/* Offers */}
                 <div className="offers-section">
@@ -184,7 +187,7 @@ function OrderFoodItems() {
                             <span className="coupon-details">View coupon details</span>
                         </div>
 
-                        {MENU_ITEMS.map(item => (
+                        {menuItems.map(item => (
                             <div key={item.id} className="menu-item">
                                 <div className="food-details">
                                     <div className="veg-icon" style={{ borderColor: item.isVeg ? '#24963f' : '#e23744' }}>
@@ -197,26 +200,28 @@ function OrderFoodItems() {
                                     </div>
                                     <span className="discount-tag">50% OFF</span>
 
-                                    {item.rating > 0 && (
-                                        <div className="food-rating">
-                                            <div className="star-box">
-                                                <span className="rating-stars">★★★★★</span>
-                                            </div>
-                                            <span className="votes-count">{item.votes} votes</span>
+                                    <div className="food-rating">
+                                        <div className="star-box">
+                                            <span className="rating-stars">★★★★★</span>
                                         </div>
-                                    )}
+                                        <span className="votes-count">{item.votes} votes</span>
+                                    </div>
                                     <p className="desc-text">{item.description}</p>
                                 </div>
 
                                 <div className="add-btn-container">
-                                    <div className="food-image-placeholder">
-                                        {/* Placeholder for food image */}
-                                    </div>
+                                    {item.image ? (
+                                        <img src={item.image} alt={item.name} className="food-image-placeholder" style={{ objectFit: 'cover' }} />
+                                    ) : (
+                                        <div className="food-image-placeholder"></div>
+                                    )}
                                     <button className="add-btn">ADD +</button>
                                     <span className="customizable-text">customisable</span>
                                 </div>
                             </div>
                         ))}
+
+                        {menuItems.length === 0 && <div style={{ padding: '20px', textAlign: 'center' }}>No items on the menu yet.</div>}
 
                         {/* Menu FAB */}
                         <div className="menu-fab">
@@ -228,7 +233,7 @@ function OrderFoodItems() {
                     </div>
                 ) : (
                     <div className="reels-grid">
-                        {REELS_DATA.map(reel => (
+                        {reelsData.map(reel => (
                             <div key={reel.id} className="grid-reel-item">
                                 <video
                                     src={reel.videoUrl}
@@ -254,6 +259,7 @@ function OrderFoodItems() {
                                 </div>
                             </div>
                         ))}
+                        {reelsData.length === 0 && <div style={{ gridColumn: '1/-1', padding: '20px', textAlign: 'center', color: 'white' }}>No reels available.</div>}
                     </div>
                 )}
             </div>

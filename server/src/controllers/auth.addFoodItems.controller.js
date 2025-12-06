@@ -1,6 +1,8 @@
 import AddFoodItems from "../models/addFoodItems.js";
 import { uploadToCloudinary } from "../utils/cloudinaryUpload.js";
+import RestaurantPartner from "../models/restaurantPartner.js";
 
+// Add Food Items Controller
 const addFoodItemsController = async (req, res) => {
     try {
         const { foodName, foodPrice, foodDescription, foodCategory, foodQuantity } = req.body;
@@ -55,6 +57,7 @@ const addFoodItemsController = async (req, res) => {
     }
 };
 
+// Get All Food Items Controller
 const getAllFoodItemsController = async (req, res) => {
     try {
         const foodItems = await AddFoodItems.find({})
@@ -65,4 +68,27 @@ const getAllFoodItemsController = async (req, res) => {
     }
 }
 
-export { addFoodItemsController, getAllFoodItemsController };
+// Get Restaurant Details Controller
+const getRestaurantDetailsController = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const restaurant = await RestaurantPartner.findById(id).select("-workPassword");
+        if (!restaurant) {
+            return res.status(404).json({ message: "Restaurant not found" });
+        }
+
+        const foodItems = await AddFoodItems.find({ restaurantPartnerId: id });
+
+        res.status(200).json({
+            message: "Restaurant details fetched successfully",
+            restaurant,
+            foodItems
+        });
+    } catch (error) {
+        console.error("Error fetching restaurant details:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
+export { addFoodItemsController, getAllFoodItemsController, getRestaurantDetailsController };

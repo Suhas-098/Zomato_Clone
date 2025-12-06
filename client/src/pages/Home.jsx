@@ -15,9 +15,9 @@ function Home() {
         <div>
             <div style={{ width: '100%', height: '100vh', overflow: 'hidden' }}>
                 <Reels />
-                <div style={{ position: 'absolute', top: '50%', left: '18%', transform: 'translate(-50%, -50%)' }}>
+                {/* <div style={{ position: 'absolute', top: '50%', left: '18%', transform: 'translate(-50%, -50%)' }}>
                     <h1>Home Page</h1>
-                </div>
+                </div> */}
             </div>
         </div>
     )
