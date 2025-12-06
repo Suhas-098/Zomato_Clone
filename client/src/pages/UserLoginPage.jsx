@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../components/Auth/Auth.css';
+import '../styles/Auth.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
