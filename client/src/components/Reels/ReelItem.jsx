@@ -54,8 +54,13 @@ const ReelItem = ({ reel, isActive }) => {
 
     // Visit the food's restaurant page
     const handleVisitStore = () => {
-        navigate(`/order-food-items`);
-        // navigate(`/order-food-items/${reel.restaurantPartnerId}`); we will adding this when we create the specific restaurant partner page
+        console.log("Navigating to store with ID:", reel.restaurantPartnerId); // LOG
+        if (!reel.restaurantPartnerId) {
+            console.error("Restaurant Partner ID is missing for reel:", reel);
+            alert("This item is not linked to a valid restaurant.");
+            return;
+        }
+        navigate(`/order-food-items/${reel.restaurantPartnerId}`);
     };
 
     // Share Reel

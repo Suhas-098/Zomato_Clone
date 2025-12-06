@@ -27,6 +27,7 @@ const AppRoutes = () => {
                 <Route path="/add-food-items" element={<AddFoodItems />} />
 
                 //when user clicks the visit store button in reels it will navigate to the restaurant partner page
+                <Route path="/order-food-items/:id" element={<OrderFoodItems />} />
                 <Route path="/order-food-items" element={<OrderFoodItems />} />
             </Routes>
         </Router>
