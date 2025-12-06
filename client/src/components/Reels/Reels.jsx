@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReelItem from './ReelItem';
-import './Reels.css';
+import '../../styles/Reels.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 

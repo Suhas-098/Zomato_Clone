@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import './AddFoodItems.css';
+import '../styles/AddFoodItems.css';
 
 function AddFoodItems() {
     const navigate = useNavigate();
