@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import '../styles/AddFoodItems.css';
+import axios from "axios";
 
 function AddFoodItems() {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    // TODO: STATE MANAGEMENT
-    // Initialize your state variables here for form fields:
-    // const [foodName, setFoodName] = useState('');
-    // const [foodPrice, setFoodPrice] = useState('');
-    // const [foodDescription, setFoodDescription] = useState('');
-    // const [foodCategory, setFoodCategory] = useState('');
-    // const [foodQuantity, setFoodQuantity] = useState('');
-    // const [foodImage, setFoodImage] = useState(null);
-    // const [foodVideo, setFoodVideo] = useState(null);
+    //STATE MANAGEMENT
+    const [foodName, setFoodName] = useState("");
+    const [foodPrice, setFoodPrice] = useState("");
+    const [foodDescription, setFoodDescription] = useState("");
+    const [foodCategory, setFoodCategory] = useState("");
+    const [foodQuantity, setFoodQuantity] = useState("");
+    const [foodImage, setFoodImage] = useState(null);
+    const [foodVideo, setFoodVideo] = useState(null);
 
     useEffect(() => {
         // Check if cookie exists
@@ -22,30 +22,35 @@ function AddFoodItems() {
         setIsLoggedIn(hasToken);
 
         // Optional: Redirect if not logged in
-        // if (!hasToken) navigate("/restaurantPartner/login");
+        if (!hasToken) navigate("/restaurantPartner/login");
     }, []);
 
+    //HANDLE SUBMIT
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // TODO: HANDLE FORM SUBMISSION
-        // 1. Create FormData object
-        // const formData = new FormData();
-        // formData.append('foodName', foodName);
-        // formData.append('foodPrice', foodPrice);
-        // ... append all fields
-        // if (foodImage) formData.append('foodImage', foodImage);
+        const formData = new FormData();
+        formData.append('foodName', foodName);
+        formData.append('foodPrice', foodPrice);
+        formData.append('foodDescription', foodDescription);
+        formData.append('foodCategory', foodCategory);
+        formData.append('foodQuantity', foodQuantity);
+        formData.append('foodImage', foodImage);
+        formData.append('foodVideo', foodVideo);
 
-        // 2. Make API call
-        // try {
-        //   const response = await axios.post('/api/food/add', formData, { ... });
-        //   alert("Food item added!");
-        // } catch (error) { ... }
-        console.log("Form submitted - Logic to be implemented");
+        //API CALL
+        try {
+            const response = await axios.post("http://localhost:3000/api/foodItems/add", formData, { withCredentials: true, headers: { "Content-Type": "multipart/form-data" } })
+            alert("Food item added!")
+            navigate("/added-food-items-dashboard");
+        } catch (error) {
+            console.log(error)
+            alert("Failed to add food item")
+        }
     };
 
-    // TODO: HANDLE FILE CHANGES
-    // const handleImageChange = (e) => setFoodImage(e.target.files[0]);
-    // const handleVideoChange = (e) => setFoodVideo(e.target.files[0]);
+    //HANDLE FILE CHANGES
+    const handleImageChange = (e) => setFoodImage(e.target.files[0]);
+    const handleVideoChange = (e) => setFoodVideo(e.target.files[0]);
 
     if (!isLoggedIn) {
         return (
@@ -78,8 +83,8 @@ function AddFoodItems() {
                                 className="form-input"
                                 placeholder="e.g. Butter Chicken"
                                 required
-                            // value={foodName}
-                            // onChange={(e) => setFoodName(e.target.value)}
+                                value={foodName}
+                                onChange={(e) => setFoodName(e.target.value)}
                             />
                         </div>
 
@@ -91,8 +96,8 @@ function AddFoodItems() {
                                 className="form-input"
                                 placeholder="e.g. 350"
                                 required
-                            // value={foodPrice}
-                            // onChange={(e) => setFoodPrice(e.target.value)}
+                                value={foodPrice}
+                                onChange={(e) => setFoodPrice(e.target.value)}
                             />
                         </div>
                     </div>
@@ -105,8 +110,8 @@ function AddFoodItems() {
                                 id="foodCategory"
                                 className="form-select"
                                 required
-                            // value={foodCategory}
-                            // onChange={(e) => setFoodCategory(e.target.value)}
+                                value={foodCategory}
+                                onChange={(e) => setFoodCategory(e.target.value)}
                             >
                                 <option value="">Select Category</option>
                                 <option value="Veg">Veg</option>
@@ -124,8 +129,8 @@ function AddFoodItems() {
                                 className="form-input"
                                 placeholder="e.g. 1 Plate / 500ml"
                                 required
-                            // value={foodQuantity}
-                            // onChange={(e) => setFoodQuantity(e.target.value)}
+                                value={foodQuantity}
+                                onChange={(e) => setFoodQuantity(e.target.value)}
                             />
                         </div>
                     </div>
@@ -137,8 +142,8 @@ function AddFoodItems() {
                             id="foodDescription"
                             className="form-textarea"
                             placeholder="Describe the dish... (ingredients, taste, etc.)"
-                        // value={foodDescription}
-                        // onChange={(e) => setFoodDescription(e.target.value)}
+                            value={foodDescription}
+                            onChange={(e) => setFoodDescription(e.target.value)}
                         ></textarea>
                     </div>
 
@@ -156,9 +161,11 @@ function AddFoodItems() {
                                     id="foodImage"
                                     className="file-input"
                                     accept="image/*"
-                                // onChange={handleImageChange}
+                                    onChange={handleImageChange}
                                 />
-                                {/* TODO: Show preview of selected image */}
+                                {foodImage && (
+                                    <p>Uploaded image: {foodImage.name}</p>
+                                )}
                             </div>
                         </div>
 
@@ -174,9 +181,14 @@ function AddFoodItems() {
                                     id="foodVideo"
                                     className="file-input"
                                     accept="video/*"
-                                // onChange={handleVideoChange}
+                                    onChange={handleVideoChange}
                                 />
-                                {/* TODO: Show preview of selected video */}
+                                {/* Show preview of selected video */}
+
+                                {foodVideo && (
+                                    <p>Uploaded video: {foodVideo.name}</p>
+                                )}
+
                             </div>
                         </div>
                     </div>

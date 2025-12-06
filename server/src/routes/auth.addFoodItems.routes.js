@@ -12,7 +12,7 @@ const upLoadVideo_Image =
     ])
 
 
-
+//Add Food Items for Restaurant Partner
 router.post("/add", protectRouteRestaurantPartner, upLoadVideo_Image, addFoodItemsController);
 
 
