@@ -34,7 +34,7 @@ function OrderFoodItems() {
                     id: item._id,
                     name: item.foodName,
                     price: item.foodPrice,
-                    discountedPrice: Math.round(item.foodPrice * 0.5), // Mock discount logic
+                    discountedPrice: Math.round(item.foodPrice * 0.7), // Mock discount logic
                     description: item.foodDescription,
                     isVeg: item.foodCategory?.toLowerCase() === 'veg', // Assuming category stores 'Veg'/'Non-Veg'
                     rating: 4.0, // Mock rating
@@ -117,7 +117,7 @@ function OrderFoodItems() {
                     <h1 className="restaurant-name">{restaurant.RestaurantPartnerName} <span style={{ fontWeight: 'normal' }}>ⓘ</span></h1>
                     <div className="rating-badge">
                         <span>4.1 ★</span>
-                        <span className="rating-count">By 10K+</span>
+                        <span className="rating-count">By 1K+</span>
                     </div>
                 </div>
 
@@ -126,7 +126,7 @@ function OrderFoodItems() {
                         <span>📍</span> {restaurant.city || "Mumbai"} • {restaurant.address || "Location"}
                     </div>
                     <div className="delivery-time">
-                        <span style={{ fontWeight: 'bold' }}>⏱ 30-35 mins</span> • Schedule for later ⌄
+                        <span style={{ fontWeight: 'bold' }}>⏱ 30-35 mins</span>
                     </div>
                 </div>
 
@@ -138,10 +138,10 @@ function OrderFoodItems() {
                 <div className="offers-section">
                     <div className="offer-card">
                         <div className="offer-text">
-                            <span>%</span> Flat ₹50 OFF above ₹199
+                            <span>₹</span> Flat ₹50 OFF above ₹199
                         </div>
                         <div className="offer-count">
-                            4 offers ⌄
+
                         </div>
                     </div>
                 </div>
@@ -184,8 +184,8 @@ function OrderFoodItems() {
                 {activeTab === 'menu' ? (
                     <div className="menu-section">
                         <div className="menu-header">
-                            <h3>FLAT 50% OFF</h3>
-                            <span className="coupon-details">View coupon details</span>
+                            <h3>FLAT 30% OFF T&C applicable </h3>
+                            <span className="coupon-details"></span>
                         </div>
 
                         {menuItems.map(item => (
@@ -199,7 +199,7 @@ function OrderFoodItems() {
                                         <span className="discounted-price">₹{item.discountedPrice}</span>
                                         <span className="original-price">₹{item.price}</span>
                                     </div>
-                                    <span className="discount-tag">50% OFF</span>
+                                    <span className="discount-tag">30% OFF</span>
 
                                     <div className="food-rating">
                                         <div className="star-box">
@@ -216,8 +216,8 @@ function OrderFoodItems() {
                                     ) : (
                                         <div className="food-image-placeholder"></div>
                                     )}
-                                    <button className="add-btn">ADD +</button>
-                                    <span className="customizable-text">customisable</span>
+                                    <button className=""></button>
+                                    <span className="customizable-text"></span>
                                 </div>
                             </div>
                         ))}

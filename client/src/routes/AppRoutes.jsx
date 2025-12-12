@@ -3,6 +3,7 @@ import UserRegisterPage from '../pages/UserRegisterPage';
 import UserLoginPage from '../pages/UserLoginPage';
 import RestaurantPartnerRegister from '../pages/RestaurantPartnerRegister';
 import RestaurantPartnerLogin from '../pages/RestaurantPartnerLogin';
+import WelcomePage from '../pages/WelcomePage';
 import Home from '../pages/Home';
 import AddFoodItems from '../pages/AddFoodItems';
 import OrderFoodItems from '../pages/OrderFoodItems';
@@ -13,6 +14,9 @@ const AppRoutes = () => {
     return (
         <Router>
             <Routes>
+                //Welcome Page
+                <Route path="/welcome" element={<WelcomePage />} />
+
                 //when user register/login they will be redirected to reels page
                 <Route path="/" element={<Home />} />
 

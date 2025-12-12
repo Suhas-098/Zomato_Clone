@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary-green: #2ecc71;
+    --dark-text: #333;
+    --light-text: #fff;
+    --gray-text: #666;
+    --input-border: #ddd;
+    --input-bg: #fff;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+/* Container for the whole page */
+.auth-page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Header Section with Green Background and Wave */
+.auth-header {
+    background-color: var(--primary-green);
+    padding: 20px 20px 0;
+    /* padding bottom handled by wave height */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    min-height: 35vh;
+    /* Adjustable */
+}
+
+.status-bar-placeholder {
+    width: 100%;
+    height: 20px;
+    /* Just for layout */
+}
+
+.brand-logo {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+/* The illustration in the header or overlapping */
+.auth-illustration-container {
+    margin-top: 20px;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-illustration {
+    width: 250px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Wave at the bottom of header */
+.header-wave {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    line-height: 0;
+}
+
+.header-wave svg {
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 60px;
+}
+
+.header-wave .shape-fill {
+    fill: #FFFFFF;
+}
+
+/* Content Text Section */
+.auth-content {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    /* Depends on page */
+}
+
+.welcome-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+.auth-buttons-container {
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-green);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #27ae60;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--primary-green);
+    color: var(--primary-green);
+}
+
+.btn-outline:hover {
+    background-color: rgba(46, 204, 113, 0.1);
+}
+
+/* Login Form Styles */
+.login-title {
+    text-align: center;
+    /* Center the title */
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 20px;
+    width: 100%;
+    /* Ensure full width for centering */
+}
+
+.auth-form {
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.form-input {
+    width: 100%;
+    padding: 15px 45px 15px 20px;
+    /* Space for icon */
+    border: 1px solid var(--input-border);
+    border-radius: 30px;
+    font-size: 1rem;
+    background-color: #fff;
+    outline: none;
+    box-sizing: border-box;
+    /* Crucial */
+}
+
+.form-input:focus {
+    border-color: var(--primary-green);
+}
+
+.forgot-password {
+    align-self: flex-end;
+    font-size: 0.8rem;
+    color: #000;
+    text-decoration: none;
+    margin-top: 5px;
+    margin-right: 10px;
+    font-weight: 500;
+}
+
+.legal-text {
+    font-size: 0.7rem;
+    color: #666;
+    text-align: center;
+    margin-top: 20px;
+    line-height: 1.4;
+}
+
+.legal-text a {
+    color: #000;
+    text-decoration: underline;
+}
+
+/* Social Login */
+.social-login {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.social-fb {
+    background-color: #3b5998;
+}
+
+.social-google {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.social-apple {
+    background-color: #000;
+}
+
+.auth-bottom-link {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.auth-bottom-link a {
+    color: var(--primary-green);
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 400px) {
+    .auth-header {
+        min-height: 30vh;
+    }
+
+    .auth-illustration {
+        width: 200px;
+    }
+}
