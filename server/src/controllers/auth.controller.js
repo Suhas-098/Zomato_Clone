@@ -132,7 +132,15 @@ const loginRestaurantPartner = async (req, res) => {
         //send token to client
         const token = jwt.sign({ id: restaurantPartner._id }, process.env.JWT_SECRET, { expiresIn: "5d" })
         res.cookie("token", token)
-        res.status(200).json({ message: "Restaurant Partner logged in successfully" })
+        res.status(200).json({
+            message: "Restaurant Partner logged in successfully",
+            partner: {
+                _id: restaurantPartner._id,
+                RestaurantPartnerName: restaurantPartner.RestaurantPartnerName,
+                workEmail: restaurantPartner.workEmail,
+                contactName: restaurantPartner.contactName
+            }
+        })
     } catch (error) {
         res.status(500).json({ message: "Internal Server Error in loginRestaurantPartner controller", error: error.message })
     }

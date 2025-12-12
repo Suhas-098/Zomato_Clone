@@ -1,0 +1,210 @@
+/* Dashboard Layout */
+.dashboard-container {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.dashboard-header {
+    background: var(--primary-green);
+    /* Using variable from UserAuth.css if imported, else fallback */
+    background-color: #2ecc71;
+    /* Fallback */
+    padding: 20px 20px 60px;
+    /* Extra padding for overlap */
+    color: white;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.2);
+}
+
+.dashboard-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.dashboard-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.dashboard-profile-icon {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.dashboard-welcome {
+    margin-bottom: 10px;
+}
+
+.dashboard-welcome h2 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.dashboard-welcome p {
+    margin: 5px 0 0;
+    opacity: 0.9;
+}
+
+/* Main Content Area */
+.dashboard-content {
+    padding: 20px;
+    margin-top: -40px;
+    /* Overlap header */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Section Title */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+/* Food Item Card */
+.food-item-card {
+    background: white;
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    gap: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    align-items: center;
+}
+
+.food-item-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.food-item-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 15px;
+    object-fit: cover;
+    background-color: #eee;
+}
+
+.food-item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.food-item-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.food-item-category {
+    font-size: 0.8rem;
+    color: #888;
+    background-color: #f1f1f1;
+    padding: 2px 8px;
+    border-radius: 10px;
+    align-self: flex-start;
+    margin-bottom: 5px;
+}
+
+.food-item-price {
+    font-weight: 600;
+    color: #2ecc71;
+    font-size: 1rem;
+}
+
+.food-item-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.edit-btn {
+    background-color: #e8f8f5;
+    color: #2ecc71;
+}
+
+.edit-btn:hover {
+    background-color: #d1f2eb;
+}
+
+.delete-btn {
+    background-color: #fdedec;
+    color: #e74c3c;
+}
+
+.delete-btn:hover {
+    background-color: #fadbd8;
+}
+
+/* FAB */
+.fab-add-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #2ecc71;
+    color: white;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s;
+    z-index: 100;
+}
+
+.fab-add-btn:hover {
+    transform: scale(1.1);
+    background-color: #27ae60;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}

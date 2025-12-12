@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import '../styles/AddFoodItems.css';
+import '../styles/PartnerDashboard.css'; // Import dashboard styles for header
 import axios from "axios";
 
 function AddFoodItems() {
@@ -64,139 +65,147 @@ function AddFoodItems() {
     }
 
     return (
-        <div className="add-food-container">
-            <div className="add-food-card">
-                <div className="form-header">
-                    <h2>Add New Food Item</h2>
-                    <p className="form-subtitle">Expand your menu with delicious new additions</p>
+        <div className="dashboard-container"> {/* Use dashboard container for consistent bg */}
+            {/* Header */}
+            <div className="dashboard-header">
+                <div className="dashboard-nav">
+                    <Link to="/added-food-items-dashboard" className="dashboard-brand" style={{ textDecoration: 'none', color: 'white' }}>
+                        &larr; Back
+                    </Link>
                 </div>
+                <div className="dashboard-welcome">
+                    <h2>Add New Item</h2>
+                    <p>Expand your menu with delicious new additions</p>
+                </div>
+            </div>
 
-                <form className="add-food-form" onSubmit={handleSubmit}>
+            <div className="dashboard-content">
+                <div className="add-food-card" style={{ marginTop: '0' }}>
+                    <form className="add-food-form" onSubmit={handleSubmit}>
 
-                    {/* Basic Details Row */}
-                    <div className="form-row">
-                        <div className="form-group">
-                            <label htmlFor="foodName">Food Name *</label>
-                            <input
-                                type="text"
-                                id="foodName"
-                                className="form-input"
-                                placeholder="e.g. Butter Chicken"
-                                required
-                                value={foodName}
-                                onChange={(e) => setFoodName(e.target.value)}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="foodPrice">Price (₹) *</label>
-                            <input
-                                type="number"
-                                id="foodPrice"
-                                className="form-input"
-                                placeholder="e.g. 350"
-                                required
-                                value={foodPrice}
-                                onChange={(e) => setFoodPrice(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Category & Quantity Row */}
-                    <div className="form-row">
-                        <div className="form-group">
-                            <label htmlFor="foodCategory">Category *</label>
-                            <select
-                                id="foodCategory"
-                                className="form-select"
-                                required
-                                value={foodCategory}
-                                onChange={(e) => setFoodCategory(e.target.value)}
-                            >
-                                <option value="">Select Category</option>
-                                <option value="Veg">Veg</option>
-                                <option value="Non-Veg">Non-Veg</option>
-                                <option value="Beverages">Beverages</option>
-                                <option value="Desserts">Desserts</option>
-                            </select>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="foodQuantity">Quantity *</label>
-                            <input
-                                type="text"
-                                id="foodQuantity"
-                                className="form-input"
-                                placeholder="e.g. 1 Plate / 500ml"
-                                required
-                                value={foodQuantity}
-                                onChange={(e) => setFoodQuantity(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Description */}
-                    <div className="form-group">
-                        <label htmlFor="foodDescription">Description</label>
-                        <textarea
-                            id="foodDescription"
-                            className="form-textarea"
-                            placeholder="Describe the dish... (ingredients, taste, etc.)"
-                            value={foodDescription}
-                            onChange={(e) => setFoodDescription(e.target.value)}
-                        ></textarea>
-                    </div>
-
-                    {/* Media Uploads */}
-                    <div className="form-row">
-                        <div className="form-group">
-                            <label>Food Image</label>
-                            <div className="file-upload-group">
-                                <label htmlFor="foodImage" className="file-label">
-                                    <span className="upload-icon">📷</span>
-                                    <span>Click to upload image</span>
-                                </label>
+                        {/* Basic Details Row */}
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="foodName">Food Name *</label>
                                 <input
-                                    type="file"
-                                    id="foodImage"
-                                    className="file-input"
-                                    accept="image/*"
-                                    onChange={handleImageChange}
+                                    type="text"
+                                    id="foodName"
+                                    className="form-input"
+                                    placeholder="e.g. Butter Chicken"
+                                    required
+                                    value={foodName}
+                                    onChange={(e) => setFoodName(e.target.value)}
                                 />
-                                {foodImage && (
-                                    <p>Uploaded image: {foodImage.name}</p>
-                                )}
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="foodPrice">Price (₹) *</label>
+                                <input
+                                    type="number"
+                                    id="foodPrice"
+                                    className="form-input"
+                                    placeholder="e.g. 350"
+                                    required
+                                    value={foodPrice}
+                                    onChange={(e) => setFoodPrice(e.target.value)}
+                                />
                             </div>
                         </div>
 
-                        <div className="form-group">
-                            <label>Food Video (Optional)</label>
-                            <div className="file-upload-group">
-                                <label htmlFor="foodVideo" className="file-label">
-                                    <span className="upload-icon">🎥</span>
-                                    <span>Click to upload video</span>
-                                </label>
+                        {/* Category & Quantity Row */}
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="foodCategory">Category *</label>
+                                <select
+                                    id="foodCategory"
+                                    className="form-select"
+                                    required
+                                    value={foodCategory}
+                                    onChange={(e) => setFoodCategory(e.target.value)}
+                                >
+                                    <option value="">Select Category</option>
+                                    <option value="Veg">Veg</option>
+                                    <option value="Non-Veg">Non-Veg</option>
+                                    <option value="Beverages">Beverages</option>
+                                    <option value="Desserts">Desserts</option>
+                                </select>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="foodQuantity">Quantity *</label>
                                 <input
-                                    type="file"
-                                    id="foodVideo"
-                                    className="file-input"
-                                    accept="video/*"
-                                    onChange={handleVideoChange}
+                                    type="text"
+                                    id="foodQuantity"
+                                    className="form-input"
+                                    placeholder="e.g. 1 Plate / 500ml"
+                                    required
+                                    value={foodQuantity}
+                                    onChange={(e) => setFoodQuantity(e.target.value)}
                                 />
-                                {/* Show preview of selected video */}
-
-                                {foodVideo && (
-                                    <p>Uploaded video: {foodVideo.name}</p>
-                                )}
-
                             </div>
                         </div>
-                    </div>
 
-                    <button type="submit" className="submit-btn">
-                        Add Food Item
-                    </button>
-                </form>
+                        {/* Description */}
+                        <div className="form-group">
+                            <label htmlFor="foodDescription">Description</label>
+                            <textarea
+                                id="foodDescription"
+                                className="form-textarea"
+                                placeholder="Describe the dish... (ingredients, taste, etc.)"
+                                value={foodDescription}
+                                onChange={(e) => setFoodDescription(e.target.value)}
+                            ></textarea>
+                        </div>
+
+                        {/* Media Uploads */}
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label>Food Image</label>
+                                <div className="file-upload-group">
+                                    <label htmlFor="foodImage" className="file-label">
+                                        <span className="upload-icon">📷</span>
+                                        <span>Click to upload image</span>
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="foodImage"
+                                        className="file-input"
+                                        accept="image/*"
+                                        onChange={handleImageChange}
+                                    />
+                                    {foodImage && (
+                                        <p style={{ marginTop: '10px', fontSize: '0.9rem', color: '#2ecc71' }}>Selected: {foodImage.name}</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="form-group">
+                                <label>Food Video (Optional)</label>
+                                <div className="file-upload-group">
+                                    <label htmlFor="foodVideo" className="file-label">
+                                        <span className="upload-icon">🎥</span>
+                                        <span>Click to upload video</span>
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="foodVideo"
+                                        className="file-input"
+                                        accept="video/*"
+                                        onChange={handleVideoChange}
+                                    />
+                                    {foodVideo && (
+                                        <p style={{ marginTop: '10px', fontSize: '0.9rem', color: '#2ecc71' }}>Selected: {foodVideo.name}</p>
+                                    )}
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" className="submit-btn">
+                            Add Food Item
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     );
