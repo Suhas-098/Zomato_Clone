@@ -96,7 +96,10 @@ This project demonstrates production-level backend architecture, secure authenti
 ✔️ 95% complete  
 🎨 Minor UI polish pending  
 ❤️ Like feature planned  
-
+Core features are completed, including cart flow and restaurant browsing.
+Some UI polishing and optional features (payments, order tracking, admin dashboard) are planned.
+Not deployed yet, as current focus is on building more projects.
+Additional improvements and feature expansions are planned for future releases.
 The application is fully functional with all core features working end-to-end.
 
 ---
